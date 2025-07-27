@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const rateLimit = require("express-rate-limit");
 const timeout = require("connect-timeout");
+const helmet = require("helmet"); // Import Helmet
 const errorHandler = require("./middleware/errorHandler");
 require("./models");
 
@@ -11,6 +12,20 @@ const PORT = process.env.PORT || 3000;
 
 const authRoutes = require("./routes/auth");
 const summarizeRoutes = require("./routes/summarize");
+
+// Use Helmet to set various HTTP headers for security
+app.use(helmet());
+
+// Configure CSP to allow images from data URLs
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      imgSrc: ["'self'", "data:"],
+      // Add other directives as needed
+    },
+  })
+);
 
 app.use(
   cors({
