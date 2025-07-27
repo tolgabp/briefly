@@ -1,9 +1,9 @@
 const nodemailer = require("nodemailer");
 
 async function sendVerificationEmail(to, token) {
-  const { FRONTEND_URL, SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS } = process.env;
+  const { FRONTEND_URL, SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, FROM_EMAIL } = process.env;
   
-  if (!FRONTEND_URL || !SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS) {
+  if (!FRONTEND_URL || !SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS || !FROM_EMAIL) {
     throw new Error("❌ Missing required environment variables for sending verification email.");
   }
 
@@ -20,7 +20,7 @@ async function sendVerificationEmail(to, token) {
   });
 
   await transporter.sendMail({
-    from: SMTP_USER,
+    from: FROM_EMAIL,
     to,
     subject: "Confirm your email",
     html: `
