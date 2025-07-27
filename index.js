@@ -1,36 +1,42 @@
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const rateLimit = require("express-rate-limit");
+const timeout = require("connect-timeout");
+const errorHandler = require("./middleware/errorHandler");
+require("./models");
+
 const app = express();
 const port = 3000;
 
-require('./models'); // connects DB & syncs models
+const authRoutes = require("./routes/auth");
+const summarizeRoutes = require("./routes/summarize");
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173", // change to prod frontend later
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 app.use(express.json());
+app.use(timeout("15s")); // Ensure LLM requests timeout cleanly
+app.use((req, res, next) => (!req.timedout ? next() : undefined));
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
+const limiter = rateLimit({
+  windowMs: 60 * 1000, 
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: "Rate limit exceeded. Try again in a minute.",
 });
+
+app.use("/auth", authRoutes);
+app.use("/summarize", limiter, summarizeRoutes);
+
+app.use(errorHandler);
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
-
-/** TESTING BEFORE ADDING FEATURES
- * TO CATCH BUGS EARLY
-*/ 
-
-const { User } = require('./models');
-
-app.get('/test-create-user', async (req, res) => {
-  try {
-    const user = await User.create({
-      email: `test${Date.now()}@example.com`,
-      password_hash: 'dummyhash'
-    });
-    res.send(user);
-  } catch (err) {
-    res.status(500).send(err.message);
-  }
+  console.log(`✅ API running at http://localhost:${port}`);
 });
