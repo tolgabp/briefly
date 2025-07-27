@@ -3,7 +3,11 @@ const jwt = require("jsonwebtoken");
 const { User } = require("../models");
 const { sendVerificationEmail } = require("../services/emailService");
 
-const JWT_SECRET = process.env.JWT_SECRET || "default_secret";
+if (!process.env.JWT_SECRET) {
+  throw new Error("❌ JWT_SECRET is not set in environment variables.");
+}
+const JWT_SECRET = process.env.JWT_SECRET;
+
 
 exports.signup = async (req, res) => {
   try {

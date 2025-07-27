@@ -7,14 +7,14 @@ const errorHandler = require("./middleware/errorHandler");
 require("./models");
 
 const app = express();
-const port = 3000;
+const PORT = process.env.PORT || 3000;
 
 const authRoutes = require("./routes/auth");
 const summarizeRoutes = require("./routes/summarize");
 
 app.use(
   cors({
-    origin: "http://localhost:5173", // change to prod frontend later
+    origin: process.env.FRONTEND_URL, // change to prod frontend later
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
@@ -37,6 +37,6 @@ app.use("/summarize", limiter, summarizeRoutes);
 
 app.use(errorHandler);
 
-app.listen(port, () => {
-  console.log(`✅ API running at http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`✅ API running at http://localhost:${PORT}`);
 });
