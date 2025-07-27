@@ -13,16 +13,13 @@ const PORT = process.env.PORT || 3000;
 const authRoutes = require("./routes/auth");
 const summarizeRoutes = require("./routes/summarize");
 
-// Use Helmet to set various HTTP headers for security
 app.use(helmet());
 
-// Configure CSP to allow images from data URLs
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: ["'self'"],
       imgSrc: ["'self'", "data:"],
-      // Add other directives as needed
     },
   })
 );
