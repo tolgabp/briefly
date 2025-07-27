@@ -44,6 +44,10 @@ const limiter = rateLimit({
   message: "Rate limit exceeded. Try again in a minute.",
 });
 
+app.get('/', (req, res) => {
+  res.send('Welcome to the API');
+});
+
 app.use("/auth", authRoutes);
 app.use("/summarize", limiter, summarizeRoutes);
 
