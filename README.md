@@ -1,6 +1,11 @@
 # Summarize API
 
+## Overview
+
+The Summarize API is a backend service designed to provide text summarization capabilities using a Large Language Model (LLM). It is built with Node.js and Express, offering secure authentication, rate limiting, and robust error handling.
+
 ## Live Production
+
 https://eirly-ai-be8b5bcf5e1b.herokuapp.com/
 
 ## Website Instructions
@@ -30,19 +35,6 @@ https://eirly-ai-be8b5bcf5e1b.herokuapp.com/
 6. **Summary Quota**:
    - Each user has a daily quota of 20 summaries.
    - The quota resets every 24 hours.
-
-
-## Overview
-
-The Summarize API is a backend service designed to provide text summarization capabilities using a Large Language Model (LLM). It is built with Node.js and Express, offering secure authentication, rate limiting, and robust error handling.
-
-## Features
-
-- **User Authentication**: Secure authentication using JSON Web Tokens (JWT).
-- **Text Summarization**: Summarizes text using an LLM service.
-- **Rate Limiting**: Protects the API from abuse by limiting the number of requests per minute.
-- **Security Enhancements**: Utilizes Helmet to secure HTTP headers.
-- **CORS Configuration**: Allows cross-origin requests from specified domains.
 
 ## Architecture
 
@@ -83,26 +75,38 @@ The application follows a modular architecture with the following key components
   - `logger.js`: Configures and manages application logging using Winston.
 
 ## Installation
-**Environment Variables**: Create a `.env` file in the root directory with the following variables:
-- `PORT`: Port number for the server.
-- `FRONTEND_URL`: URL of the frontend application for CORS.
-- `JWT_SECRET`: Secret key for signing JWT tokens.
-- `DATABASE_URL`: Connection string for the database.
-- `LLM_API_KEY`: API key for accessing the LLM service.
-- `FRONTEND_URL`: http://localhost:example
-- `DB_NAME`: exampleName
-- `DB_USER`: exampleUser
-- `DB_PASS`: examplePass
-- `DB_HOST`: exampleHOST
-- `DB_PORT`: 3306
 
-- `JWT_SECRET`: exampleJWTKey
-- `GROQ_API_KEY`: exampleAPIKEY
-- `SMTP_HOST`:smtp.example.org
-- `SMTP_PORT`: examplePort
-- `SMTP_USER`: exampleUser
-- `SMTP_PASS`: examplePass
-- `FROM_EMAIL`: example@gmail.com
+1. **Clone the repository**:
+   ```bash
+   git clone <repository-url>
+   cd summarize-api
+   ```
+
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+
+3. **Environment Variables**: Create a `.env` file in the root directory with the following variables:
+   - `PORT`: Port number for the server.
+   - `FRONTEND_URL`: URL of the frontend application for CORS.
+   - `JWT_SECRET`: Secret key for signing JWT tokens.
+   - `DATABASE_URL`: Connection string for the database.
+   - `LLM_API_KEY`: API key for accessing the LLM service.
+   - `FRONTEND_URL`: http://localhost:example
+   - `DB_NAME`: exampleName
+   - `DB_USER`: exampleUser
+   - `DB_PASS`: examplePass
+   - `DB_HOST`: exampleHOST
+   - `DB_PORT`: 3306
+
+   - `JWT_SECRET`: exampleJWTKey
+   - `GROQ_API_KEY`: exampleAPIKEY
+   - `SMTP_HOST`:smtp.example.org
+   - `SMTP_PORT`: examplePort
+   - `SMTP_USER`: exampleUser
+   - `SMTP_PASS`: examplePass
+   - `FROM_EMAIL`: example@gmail.com
 
 ## Running the Application
 
@@ -166,6 +170,17 @@ Ensure that your `.env` file is configured correctly for local development, but 
 - **Helmet**: Helps secure Express apps by setting various HTTP headers.
 - **CORS**: Middleware for enabling CORS with various options.
 - **Rate Limiting**: To limit repeated requests to public APIs.
+
+## Postman Test Results
+
+### Signup Test
+![Signup Test](./readmeImages/signup.png)
+
+### Login Test
+![Login Test](./readmeImages/login.png)
+
+### Summarize Test
+![Summarize Test](./readmeImages/summarizeTest.png)
 
 ## License
 
