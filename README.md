@@ -170,6 +170,7 @@ Ensure that your `.env` file is configured correctly for local development, but 
 - **Helmet**: Helps secure Express apps by setting various HTTP headers.
 - **CORS**: Middleware for enabling CORS with various options.
 - **Rate Limiting**: To limit repeated requests to public APIs.
+- **Brevo**: Used for email confirmation services.
 
 ## Postman Test Results
 
